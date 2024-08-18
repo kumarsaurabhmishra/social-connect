@@ -88,9 +88,7 @@ public class UserServiceImpl implements UserService {
             follower.getFollowings().remove(followingUserId);
             userRepository.save(follower);
         }
-
         return follower;
-
     }
 
     @Override

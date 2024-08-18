@@ -1,13 +1,8 @@
 package com.saurabh.social_connect.entity;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
 
-import java.util.ArrayList;
 import java.util.HashSet;
-import java.util.List;
 import java.util.Set;
 
 @Entity
@@ -26,10 +21,13 @@ public class User {
     private Set<Long> followers = new HashSet<>();
     private Set<Long> followings = new HashSet<>();
 
+    @ManyToMany
+    private Set<Post> savedPosts = new HashSet<>();
+
     public User() {
     }
 
-    public User(Long userId, String firstName, String lastName, String email, String password, String gender, Set<Long> followers, Set<Long> followings) {
+    public User(Long userId, String firstName, String lastName, String email, String password, String gender, Set<Long> followers, Set<Long> followings, Set<Post> savedPosts) {
         this.userId = userId;
         this.firstName = firstName;
         this.lastName = lastName;
@@ -38,6 +36,7 @@ public class User {
         this.gender = gender;
         this.followers = followers;
         this.followings = followings;
+        this.savedPosts = savedPosts;
     }
 
     public Long getUserId() {
@@ -102,5 +101,13 @@ public class User {
 
     public void setFollowings(Set<Long> followings) {
         this.followings = followings;
+    }
+
+    public Set<Post> getSavedPosts() {
+        return savedPosts;
+    }
+
+    public void setSavedPosts(Set<Post> savedPosts) {
+        this.savedPosts = savedPosts;
     }
 }
