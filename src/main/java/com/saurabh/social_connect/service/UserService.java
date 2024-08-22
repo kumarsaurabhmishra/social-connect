@@ -23,6 +23,4 @@ public interface UserService {
     List<User> searchUser(String query);
 
     User unfollowUser(Long followerUserId, Long followingUserId);
-
-
 }

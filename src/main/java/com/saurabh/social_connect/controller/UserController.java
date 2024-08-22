@@ -6,6 +6,7 @@ import org.antlr.v4.runtime.misc.Pair;
 import org.apache.coyote.Response;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import javax.swing.text.html.Option;
@@ -14,7 +15,7 @@ import java.util.List;
 import java.util.Optional;
 
 @RestController
-@RequestMapping("users")
+@RequestMapping("/users")
 public class UserController {
 
     private final UserService userService;
@@ -22,10 +23,10 @@ public class UserController {
     public UserController(UserService userService) {
         this.userService = userService;
     }
-
-    @GetMapping("")
+ 
+    @PreAuthorize("hasAnyAuthority('ADMIN')")
+    @GetMapping
     public ResponseEntity<List<User>> getAllUser() {
-
         List<User> users = userService.getAllUsers();
         return new ResponseEntity<>(users, HttpStatus.OK);
     }
@@ -40,15 +41,6 @@ public class UserController {
         }
 
         return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-    }
-
-    @PostMapping("/create")
-    public ResponseEntity<User> createUser(@RequestBody User userRequest) {
-
-        User user = userService.createUser(userRequest);
-
-        return new ResponseEntity<>(user, HttpStatus.CREATED);
-
     }
 
     @DeleteMapping("/{userId}")
