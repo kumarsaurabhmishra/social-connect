@@ -6,6 +6,7 @@ import com.saurabh.social_connect.repository.PostRepository;
 import com.saurabh.social_connect.repository.UserRepository;
 import com.saurabh.social_connect.service.PostService;
 import com.saurabh.social_connect.service.UserService;
+import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
@@ -13,17 +14,12 @@ import java.util.List;
 import java.util.Optional;
 
 @Service
+@AllArgsConstructor
 public class PostServiceImpl implements PostService {
 
     private final PostRepository postRepository;
     private final UserService userService;
     private final UserRepository userRepository;
-
-    public PostServiceImpl(PostRepository postRepository, UserService userService, UserRepository userRepository) {
-        this.postRepository = postRepository;
-        this.userService = userService;
-        this.userRepository = userRepository;
-    }
 
     @Override
     public Post createPost(Post postRequest, Long userId) throws Exception {

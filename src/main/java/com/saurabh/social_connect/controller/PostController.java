@@ -3,6 +3,7 @@ package com.saurabh.social_connect.controller;
 import com.saurabh.social_connect.Response.ApiResponse;
 import com.saurabh.social_connect.entity.Post;
 import com.saurabh.social_connect.service.PostService;
+import lombok.AllArgsConstructor;
 import org.apache.coyote.Response;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -11,22 +12,19 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping("/posts")
+@RequestMapping("api/v1/posts")
+@AllArgsConstructor
 public class PostController {
 
     private final PostService postService;
 
-    public PostController(PostService postService) {
-        this.postService = postService;
-    }
-
-    @PostMapping
+    @PostMapping("/create")
     public ResponseEntity<Post> createPost(@RequestBody Post postRequest, @RequestParam("userId") Long userId) throws Exception {
         Post post = postService.createPost(postRequest, userId);
         return new ResponseEntity<>(post, HttpStatus.ACCEPTED);
     }
 
-    @DeleteMapping
+    @DeleteMapping("/delete")
     public ResponseEntity<ApiResponse> deletePost(@RequestParam("postId") Long postId, @RequestParam("userId") Long userId) throws Exception {
 
         String message = postService.deletePost(postId, userId);

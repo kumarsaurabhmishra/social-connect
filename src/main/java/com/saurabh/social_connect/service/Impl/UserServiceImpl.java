@@ -3,6 +3,7 @@ package com.saurabh.social_connect.service.Impl;
 import com.saurabh.social_connect.entity.User;
 import com.saurabh.social_connect.repository.UserRepository;
 import com.saurabh.social_connect.service.UserService;
+import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.Collections;
@@ -10,13 +11,10 @@ import java.util.List;
 import java.util.Optional;
 
 @Service
+@AllArgsConstructor
 public class UserServiceImpl implements UserService {
 
     private final UserRepository userRepository;
-
-    public UserServiceImpl(UserRepository userRepository) {
-        this.userRepository = userRepository;
-    }
 
     @Override
     public User createUser(User user) {

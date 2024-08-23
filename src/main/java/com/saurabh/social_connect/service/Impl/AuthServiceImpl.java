@@ -8,6 +8,7 @@ import com.saurabh.social_connect.enums.Role;
 import com.saurabh.social_connect.jwts.JwtUtils;
 import com.saurabh.social_connect.repository.UserRepository;
 import com.saurabh.social_connect.service.AuthService;
+import lombok.AllArgsConstructor;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
@@ -20,19 +21,13 @@ import org.springframework.stereotype.Service;
 import java.util.Optional;
 
 @Service
+@AllArgsConstructor
 public class AuthServiceImpl implements AuthService {
 
     private final UserRepository userRepository;
     private final PasswordEncoder passwordEncoder;
     private final JwtUtils jwtUtils;
     private final AuthenticationManager authenticationManager;
-
-    public AuthServiceImpl(UserRepository userRepository, PasswordEncoder passwordEncoder, JwtUtils jwtUtils, AuthenticationManager authenticationManager) {
-        this.userRepository = userRepository;
-        this.passwordEncoder = passwordEncoder;
-        this.jwtUtils = jwtUtils;
-        this.authenticationManager = authenticationManager;
-    }
 
     @Override
     public AuthenticationResponse register(RegisterRequest request) {

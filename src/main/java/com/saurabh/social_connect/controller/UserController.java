@@ -2,6 +2,7 @@ package com.saurabh.social_connect.controller;
 
 import com.saurabh.social_connect.entity.User;
 import com.saurabh.social_connect.service.UserService;
+import lombok.AllArgsConstructor;
 import org.antlr.v4.runtime.misc.Pair;
 import org.apache.coyote.Response;
 import org.springframework.http.HttpStatus;
@@ -15,15 +16,12 @@ import java.util.List;
 import java.util.Optional;
 
 @RestController
-@RequestMapping("/users")
+@RequestMapping("api/v1/users")
+@AllArgsConstructor
 public class UserController {
 
     private final UserService userService;
-
-    public UserController(UserService userService) {
-        this.userService = userService;
-    }
- 
+    
     @PreAuthorize("hasAnyAuthority('ADMIN')")
     @GetMapping
     public ResponseEntity<List<User>> getAllUser() {
@@ -43,6 +41,7 @@ public class UserController {
         return new ResponseEntity<>(HttpStatus.NOT_FOUND);
     }
 
+    @PreAuthorize("hasAnyAuthority('ADMIN')")
     @DeleteMapping("/{userId}")
     public ResponseEntity<Pair<String, User>> deleteUser(@PathVariable("userId") Long userId) {
         User user = userService.deleteUser(userId);

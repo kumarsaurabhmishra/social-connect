@@ -2,37 +2,33 @@ package com.saurabh.social_connect.entity;
 
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
-import lombok.Data;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
-import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
 
 @Entity
+@Getter
+@Setter
 @AllArgsConstructor
 @NoArgsConstructor
-@Data
-public class Post {
+public class Comment {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long postId;
+    private Long id;
 
-    private String caption;
-    private String image;
-    private String video;
+    private String content;
 
     @ManyToOne
     private User user;
+
+    @ManyToMany
+    private List<User> like = new ArrayList<>();
+
     private LocalDateTime createdAt;
-
-    @OneToMany
-    private Set<User> liked = new HashSet<>();
-
-    @OneToMany
-    private List<Comment> comments = new ArrayList<>();
-
 }

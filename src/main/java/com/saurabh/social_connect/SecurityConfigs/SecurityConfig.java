@@ -4,6 +4,7 @@ import com.saurabh.social_connect.entity.User;
 import com.saurabh.social_connect.enums.Role;
 import com.saurabh.social_connect.jwts.JwtAuthenticationFilter;
 import com.saurabh.social_connect.repository.UserRepository;
+import lombok.AllArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -28,22 +29,18 @@ import java.util.Optional;
 @Configuration
 @EnableWebSecurity
 @EnableMethodSecurity(prePostEnabled = true)
+@AllArgsConstructor
 public class SecurityConfig {
 
     private final JwtAuthenticationFilter jwtAuthenticationFilter;
     private final AuthenticationProvider authenticationProvider;
-
-    public SecurityConfig(JwtAuthenticationFilter jwtAuthenticationFilter, AuthenticationProvider authenticationProvider) {
-        this.jwtAuthenticationFilter = jwtAuthenticationFilter;
-        this.authenticationProvider = authenticationProvider;
-    }
 
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
 
         http.authorizeHttpRequests(req -> req
                         .requestMatchers("/api/v1/auth/**").permitAll()
-                        .requestMatchers("/users/**").hasAnyAuthority(Role.USER.name(), Role.ADMIN.name())
+                        .requestMatchers("/api/v1/**").hasAnyAuthority(Role.USER.name(), Role.ADMIN.name())
                         .anyRequest().authenticated())
                 .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .csrf(AbstractHttpConfigurer::disable)
